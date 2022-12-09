@@ -1,5 +1,6 @@
 # leetcode-local-environment
-A C++ library that can take input just like leetcode testcase, and structure from leetcode, to allow local debugging for leetcode being very simple.
+A C++ library that can take input just like leetcode testcase, and structure from leetcode, to allow local coding and debugging for leetcode to become very simple.\
+***You can use you FAVOURITE IDE editors on LEETCODE.***
 > Issues for new structure to be support are welcomed
 # You can input vector like
 > multi-dimensional vector are support(bool,int,char)
