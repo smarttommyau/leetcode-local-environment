@@ -1,6 +1,6 @@
 # leetcode-local-environment
 A C++ library that can take input just like leetcode testcase, and structure from leetcode, to allow local debugging for leetcode being very simple.
-
+> Issues for new structure to be support are welcomed
 # You can input vector like
 > multi-dimensional vector are support(bool,int,char)
 ```
@@ -29,6 +29,7 @@ You can simpily copy and paste the method to the template to start code and debu
 # Currently supported feature
 1. multi-dimentional vector input output(bool,int,char)
 2. Basic support for TreeNode structure for graph questions
+
 #TODO
 1. More kind of vector support
 2. Support more kind of leetcode like input
