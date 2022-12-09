@@ -2,6 +2,8 @@
 A C++ library that can take input just like leetcode testcase, and structure from leetcode, to allow local coding and debugging for leetcode to become very simple.\
 ***You can use you FAVOURITE IDE editors on LEETCODE.***
 > Issues for new structure to be support are welcomed
+# How to use it
+Simply clone this repo and ```#include "leetcode.hpp"```, you may take reference on ```template.cpp```
 # You can input vector like
 > multi-dimensional vector are support(bool,int,char)
 ```
@@ -24,7 +26,7 @@ cout << v;
 [[0,0,1],[1,2,3]]
 ```
 # Template
-Look at the template.cpp gives a simple template.\
+Look at the ***template.cpp*** gives a simple template.\
 You can simpily copy and paste the method to the template to start code and debug locally.
 
 # Currently supported feature
