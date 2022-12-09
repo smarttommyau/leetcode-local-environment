@@ -79,7 +79,6 @@ std::istream& operator>> (std::istream& in, std::vector<T>& v) {
     v.clear();
     std::string str;
     getline(in,str);
-    std::cout << str << std::endl;
     int count =0;
     for(char x:str)
         if(x == '[') count++;
