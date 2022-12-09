@@ -6,10 +6,6 @@
 #include<iterator>
 #include<algorithm>
 
-//operator for bool turn this on if you want
-std::ostream& operator<< (std::ostream& out, const bool& v) {
-    out << v?"true":"false";
-}
 //vector output
 template <typename T>
 std::ostream& operator<< (std::ostream& out, const std::vector<T>& v) {
