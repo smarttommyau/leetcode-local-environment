@@ -16,7 +16,7 @@ std::ostream& operator<< (std::ostream& out, const std::vector<T>& v) {
          out << '[';
          bool ischar = std::is_same<char,T>::value;//check if it is a vector<char>
          for(auto x:v){
-              out << (ischar?"\'":"") << x << (ischar?"\'":"") << ", ";//ouput 'char'/int
+              out << (ischar?"\"":"") << x << (ischar?"\"":"") << ", ";//ouput 'char'/int
          }
          out << "\b\b]"; // use two ANSI backspace characters '\b' to overwrite final ", "
 
@@ -31,7 +31,7 @@ std::istream& operator>> (std::istream& in, std::vector<char>& v) {
     std::getline(in,str,']');
     v.reserve(str.size()/4);
     for(std::string::iterator it=str.begin();it<str.end();++it){
-        if(*it == '\'' || *it == ','|| *it == '[')
+        if(*it == '\"' || *it == ','|| *it == '['||*it=='\'')
             continue;
         v.push_back(*it);
     }
