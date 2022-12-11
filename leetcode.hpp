@@ -7,6 +7,22 @@
 #include <iterator>
 #include <algorithm>
 
+//structures
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode() : val(0), left(nullptr), right(nullptr) {}
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+    TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+};
+struct ListNode {
+    int val;
+    ListNode *next;
+    ListNode() : val(0), next(nullptr) {}
+    ListNode(int x) : val(x), next(nullptr) {}
+    ListNode(int x, ListNode *next) : val(x), next(next) {}
+};
 //vector output
 template <typename T>
 std::ostream& operator<< (std::ostream& out, const std::vector<T>& v) {
@@ -87,7 +103,7 @@ std::istream& operator>> (std::istream& in, std::vector<T>& v) {
         count++;
       if(x==']')
         count--;
-      if(count>0)
+      if(count>=0)
         str += in.get();
     }while(count >0);
     count =0;
@@ -110,14 +126,6 @@ std::istream& operator>> (std::istream& in, std::vector<T>& v) {
     }
     return in;
 }
-struct TreeNode {
-    int val;
-    TreeNode *left;
-    TreeNode *right;
-    TreeNode() : val(0), left(nullptr), right(nullptr) {}
-    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-    TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
-};
 
 //output TreeNode
 //cannot use TreeNode* as std lib will simpily bypass the custom function and output the address
@@ -205,4 +213,47 @@ std::istream& operator>> (std::istream& in, TreeNode* & root) {
     TreeNode node = *root;
   }
   return in;
+}
+//output ListNode
+//cannot use ListNode* as std lib will simpily bypass the custom function and output the address
+std::ostream& operator<< (std::ostream& out, const ListNode list) {
+   out  << "[";
+   ListNode* r = new ListNode(list.val,list.next);
+   while(r){
+       out << r->val << ",";
+       r = r->next;
+   }
+   out <<"\b]";
+    return out;
+}
+// input ListNode
+std::istream& operator>> (std::istream& in, ListNode*& list) {
+    std::string str;
+    std::getline(in,str,']');
+    std::stringstream os;
+    ListNode* node = list;
+    bool first =true;
+    for(std::string::iterator it=str.begin();it<str.end();++it){
+        if(*it == '[' )
+            continue;
+        if(*it == ','||it==str.end()-1){
+            int temp;
+            if(it==str.end()-1)// append the last char for this case
+                os << *it;
+            os >> temp;
+            if(first){
+                node->val = temp;
+                first = false;
+            }else{
+                node->next = new ListNode(temp);
+                node = node->next;
+            }
+            os.clear();
+            continue;
+        }
+        if(*it>'9'||*it<'0')
+            continue;
+        os << *it;
+    }
+    return in;
 }
