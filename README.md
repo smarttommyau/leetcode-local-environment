@@ -35,6 +35,8 @@ cout << v;
 1. All contruction methods(also allow auto-completion to work)
 2. Input and output with cin,cout
 ## Example 
+![Binary_tree_v2](https://user-images.githubusercontent.com/75346987/206894919-3c640bd4-0dc7-4a44-b95a-1e06b9417612.svg)
+
 ### Code
 ```
 //code for input
