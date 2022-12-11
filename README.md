@@ -54,11 +54,13 @@ cout << outnode;
 ```
 [1,7,9,2,6,null,9,null,null,5,11,5,null]  
 ```
-
+### ListNode
+> work simlar as TreeNode
 # Currently supported feature
 1. multi-dimentional vector input output(bool,int,char)
 2. Basic support for TreeNode structure for graph questions
 3. cin and cout support for TreeNode
+4. cin and cout support for ListNode
 # TODO
 1. More kind of vector support
 2. Support more kind of leetcode like input

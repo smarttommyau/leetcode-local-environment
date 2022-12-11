@@ -13,7 +13,7 @@ class Solution{
     void method2(vector<int> &nums){
       //do something with nums
     }
-    //method that work with TreeNode
+    //method that work with TreeNode (Work same for ListNode)
     TreeNode* method3(TreeNode* root){
       return root;
     }
@@ -32,6 +32,7 @@ int main(){
   cout << nums2;
   //method3
   cin >> root;
+  //ListNode work same as TreeNode require the conversion before TreeNode
   TreeNode outnode = *s.method3(root);//Cannot use TreeNode* directly, as the address will be output if use TreeNode*
   cout << outnode;
 
