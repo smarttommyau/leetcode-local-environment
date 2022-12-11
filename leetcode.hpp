@@ -1,10 +1,11 @@
-#include <ios>
 #include <istream>
-#include<vector>
-#include<iostream>
-#include<sstream>
-#include<iterator>
-#include<algorithm>
+#include <ostream>
+#include <queue>
+#include <string>
+#include <vector>
+#include <sstream>
+#include <iterator>
+#include <algorithm>
 
 //vector output
 template <typename T>
@@ -78,8 +79,18 @@ template <class T>
 std::istream& operator>> (std::istream& in, std::vector<T>& v) {
     v.clear();
     std::string str;
-    getline(in,str);
     int count =0;
+    //take input
+    do{
+      char x = in.peek();
+      if(x=='[')
+        count++;
+      if(x==']')
+        count--;
+      if(count>0)
+        str += in.get();
+    }while(count >0);
+    count =0;
     for(char x:str)
         if(x == '[') count++;
         else break;
@@ -108,3 +119,90 @@ struct TreeNode {
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
 
+//output TreeNode
+//cannot use TreeNode* as std lib will simpily bypass the custom function and output the address
+std::ostream& operator<< (std::ostream& out, const TreeNode & root) {
+   out  << "[";
+   std::queue<TreeNode*> q;
+   TreeNode* r = new TreeNode(root.val,root.left,root.right);
+   if(r)
+     q.push(r);
+   while(!q.empty()){
+     int i=0;
+     std::queue<TreeNode*> q2 = q;
+     while(!q2.empty()){//check if this height of the tree only contains null
+       if(q2.front()!=nullptr)
+         break;
+       q2.pop();
+       i++;
+     }
+     if(i==q.size())
+       break;
+     for(int size=q.size();size>0;size--){
+       TreeNode* node = q.front();
+       if(node==nullptr){
+         q.pop();
+         out << "null,";
+         continue;
+       }
+       q.pop();
+       out << node->val << ",";
+         q.push(node->left);
+         q.push(node->right);
+     }
+   }
+   out <<"\b]";
+    return out;
+}
+
+//input TreeNode
+
+std::istream& operator>> (std::istream& in, TreeNode* & root) {
+  std::string str;
+  std::getline(in,str,']');
+  size_t pos = str.find(',');
+  size_t lst = 1;
+  std::stringstream os;
+  std::queue<TreeNode*> q;
+  std::queue<std::pair<TreeNode*,bool>> parent;//parent, and left or right
+  root = new TreeNode();
+  q.push(root);
+  parent.push({nullptr,true});
+  while(lst<=pos){
+    std::string s(str,lst,pos-lst);
+    if(s=="null"){
+      delete q.front();
+      if(parent.front().second){
+        parent.front().first->left = nullptr;
+      }else{
+        parent.front().first->right = nullptr;
+      }
+    }else {
+      int x = stoi(s);
+      q.front()->val = x;
+      q.front()->left = new TreeNode();
+      q.front()->right= new TreeNode();
+      q.push(q.front()->left);q.push(q.front()->right);
+      parent.push({q.front(),true}),parent.push({q.front(),false});
+    }
+    parent.pop();
+    q.pop();
+    lst = pos+1;
+    pos = str.find(',',pos+1);
+    if(pos==std::string::npos)
+      pos = str.size();
+  }
+
+  while(!q.empty()){
+    delete q.front();
+    if(parent.front().second){
+      parent.front().first->left = nullptr;
+    }else{
+      parent.front().first->right = nullptr;
+    }
+    parent.pop();
+    q.pop();
+    TreeNode node = *root;
+  }
+  return in;
+}

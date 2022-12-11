@@ -4,36 +4,59 @@ A C++ library that can take input just like leetcode testcase, and structure fro
 > Issues for new structure to be support are welcomed
 # How to use it
 Simply clone this repo and ```#include "leetcode.hpp"```, you may take reference on ```template.cpp```
-# You can input vector like
+# Template
+Look at the ***template.cpp*** gives a simple template.\
+You can simpily copy and paste the method to the template to start code and debug locally.
+# Vector
 > multi-dimensional vector are support(bool,int,char)
 ```
 [[0,0,1],[1,2,3]]
+[[true,false],[false,true]]
+[["h","e","l","l","o"],["w","o","r","l","d"]]
 ```
-## code 
+## Code (int 2d vector as exmaple)
+### Input
 ```
 vector<vector<int>> v;
 cin >> v;
 ```
-
-# Multi-dimensional vector can also be eaily output
-## code
+### Output 
 ```
 vector<vector<int>> v{{0,0,1},{1,2,3};
 cout << v;
 ```
-## output 
+### STDOUT 
 ```
 [[0,0,1],[1,2,3]]
 ```
-# Template
-Look at the ***template.cpp*** gives a simple template.\
-You can simpily copy and paste the method to the template to start code and debug locally.
+# TreeNode
+> Support for struct TreeNode 
+## Supported Options
+1. All contruction methods(also allow auto-completion to work)
+2. Input and output with cin,cout
+## Example 
+### Code
+```
+//code for input
+TreeNode * root;
+cin >> root;
+//code for output
+TreeNode outnode = *root;//cannot use TreeNode* to output as all pointer will output the address directly
+cout << outnode;
+```
+### STDIN
+```
+[1,7,9,2,6,null,9,null,null,5,11,5,null]  
+```
+### STDOUT
+```
+[1,7,9,2,6,null,9,null,null,5,11,5,null]  
+```
 
 # Currently supported feature
 1. multi-dimentional vector input output(bool,int,char)
 2. Basic support for TreeNode structure for graph questions
-
-#TODO
+3. cin and cout support for TreeNode
+# TODO
 1. More kind of vector support
 2. Support more kind of leetcode like input
-3. cin and cout support for TreeNode
