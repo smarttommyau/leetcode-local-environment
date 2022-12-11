@@ -35,6 +35,8 @@ cout << v;
 1. All contruction methods(also allow auto-completion to work)
 2. Input and output with cin,cout
 ## Example 
+![Binary_tree_v2](https://user-images.githubusercontent.com/75346987/206894919-3c640bd4-0dc7-4a44-b95a-1e06b9417612.svg)
+
 ### Code
 ```
 //code for input
@@ -52,11 +54,13 @@ cout << outnode;
 ```
 [1,7,9,2,6,null,9,null,null,5,11,5,null]  
 ```
-
+### ListNode
+> work simlar as TreeNode
 # Currently supported feature
 1. multi-dimentional vector input output(bool,int,char)
 2. Basic support for TreeNode structure for graph questions
 3. cin and cout support for TreeNode
+4. cin and cout support for ListNode
 # TODO
 1. More kind of vector support
 2. Support more kind of leetcode like input
