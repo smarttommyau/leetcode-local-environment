@@ -6,7 +6,6 @@
 #include <sstream>
 #include <iterator>
 #include <algorithm>
-#include <vector>
 
 //structures
 struct TreeNode {
@@ -23,22 +22,6 @@ struct ListNode {
     ListNode() : val(0), next(nullptr) {}
     ListNode(int x) : val(x), next(nullptr) {}
     ListNode(int x, ListNode *next) : val(x), next(next) {}
-};
-class Node {
-public:
-    int val;
-    std::vector<Node*> children;
-
-    Node() {}
-
-    Node(int _val) {
-        val = _val;
-    }
-
-    Node(int _val, std::vector<Node*> _children) {
-        val = _val;
-        children = _children;
-    }
 };
 //vector output
 template <typename T>
@@ -181,11 +164,13 @@ std::ostream& operator<< (std::ostream& out, const TreeNode & root) {
 }
 
 //input TreeNode
+
 std::istream& operator>> (std::istream& in, TreeNode* & root) {
   std::string str;
   std::getline(in,str,']');
   size_t pos = str.find(',');
   size_t lst = 1;
+  std::stringstream os;
   std::queue<TreeNode*> q;
   std::queue<std::pair<TreeNode*,bool>> parent;//parent, and left or right
   root = new TreeNode();
@@ -271,66 +256,4 @@ std::istream& operator>> (std::istream& in, ListNode*& list) {
         os << *it;
     }
     return in;
-}
-
-//output Node
-// beware that a char before the output will be deleted
-//cannot use Node* as std lib will simpily bypass the custom function and output the address
-std::ostream& operator<< (std::ostream& out, const Node node) {
-  out << "[";
-  out << node.val;
-  out << ",null,";
-  std::vector<Node*> nodes = node.children;
-  std::queue<std::vector<Node*>> q;
-  std::queue<int> num;
-  q.push(node.children);
-  num.push(node.children.size());
-  while(!q.empty()){
-    int temp = num.front();
-    num.pop();
-    for(int i = 0;i<temp;i++){
-      std::vector<Node*> tempNode = q.front();
-      q.pop();
-      for(auto x:tempNode){
-        out << x->val << ",";
-        q.push(x->children);
-        num.push(x->children.size());
-      }
-    }
-    out << "null,";
-  }
-  out << "\b\b\b\b\b\b]";//5 * \b delete the last null and the last comma
-  return out;
-}
-//input Node
-std::istream& operator>> (std::istream& in, Node*& node) {
-  std::string str;
-  std::getline(in,str,']');
-  node = new Node();
-  size_t pos = str.find(',');
-  size_t lst = 1;
-  bool start = true;
-  std::queue<Node*> parent;
-  while(lst<=pos){
-    std::string s(str,lst,pos-lst);
-    if(parent.empty()){
-      int x = stoi(s);
-      node->val = x;
-      parent.push(node);
-    }else if(s=="null"){
-      if(!start) parent.pop();
-      else start = false;
-    }else {
-      int x = stoi(s);
-      Node * newnode = new Node();
-      parent.front()->children.push_back(newnode);
-      newnode->val = x;
-      parent.push(newnode);
-    }
-    lst = pos+1;
-    pos = str.find(',',pos+1);
-    if(pos==std::string::npos)
-      pos = str.size();
-  }
-  return in;
 }
