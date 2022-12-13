@@ -1,5 +1,6 @@
 #include <istream>
 #include <ostream>
+#include <iostream>
 #include <queue>
 #include <string>
 #include <vector>
@@ -212,7 +213,13 @@ std::istream& operator>> (std::istream& in, TreeNode* & root) {
     }
   std::string str;
   std::getline(in,str,']');
+    if(str.size()==1){
+     root = nullptr;
+        return in;
+    }
   size_t pos = str.find(',');
+    if(pos==std::string::npos)
+      pos = str.size();
   size_t lst = 1;
   std::queue<TreeNode*> q;
   std::queue<std::pair<TreeNode*,bool>> parent;//parent, and left or right
@@ -276,6 +283,10 @@ std::istream& operator>> (std::istream& in, ListNode*& list) {
         c = in.get();
     std::string str;
     std::getline(in,str,']');
+    if(str.size()==1){
+     list = nullptr;
+        return in;
+    }
     std::stringstream os;
     ListNode* node = list;
     bool first =true;
@@ -308,16 +319,17 @@ std::istream& operator>> (std::istream& in, ListNode*& list) {
 // beware that a char before the output will be deleted
 //cannot use Node* as std lib will simpily bypass the custom function and output the address
 std::ostream& operator<< (std::ostream& out, const Node node) {
+  int lstNull = 0;
   out << "[";
   out << node.val;
   out << ",null,";
+  lstNull++;
   std::vector<Node*> nodes = node.children;
   std::queue<std::vector<Node*>> q;
   std::queue<int> num;
   q.push(node.children);
   num.push(1);
   num.push(node.children.size());
-  int lstNull = 0;
   while(!q.empty()){
     std::queue<std::vector<Node*>> tempq = q;
     while(!tempq.empty()&&tempq.front().size()==0){
@@ -359,8 +371,14 @@ std::istream& operator>> (std::istream& in, Node*& node) {
     }
   std::string str;
   std::getline(in,str,']');
+    if(str.size()==1){
+     node = nullptr;
+        return in;
+    }
   node = new Node();
   size_t pos = str.find(',');
+    if(pos==std::string::npos)
+      pos = str.size();
   size_t lst = 1;
   bool start = true;
   std::queue<Node*> parent;
