@@ -6,7 +6,6 @@
 #include <sstream>
 #include <iterator>
 #include <algorithm>
-#include <vector>
 
 //structures
 struct TreeNode {
@@ -23,22 +22,6 @@ struct ListNode {
     ListNode() : val(0), next(nullptr) {}
     ListNode(int x) : val(x), next(nullptr) {}
     ListNode(int x, ListNode *next) : val(x), next(next) {}
-};
-class Node {
-public:
-    int val;
-    std::vector<Node*> children;
-
-    Node() {}
-
-    Node(int _val) {
-        val = _val;
-    }
-
-    Node(int _val, std::vector<Node*> _children) {
-        val = _val;
-        children = _children;
-    }
 };
 //vector output
 template <typename T>
@@ -181,11 +164,13 @@ std::ostream& operator<< (std::ostream& out, const TreeNode & root) {
 }
 
 //input TreeNode
+
 std::istream& operator>> (std::istream& in, TreeNode* & root) {
   std::string str;
   std::getline(in,str,']');
   size_t pos = str.find(',');
   size_t lst = 1;
+  std::stringstream os;
   std::queue<TreeNode*> q;
   std::queue<std::pair<TreeNode*,bool>> parent;//parent, and left or right
   root = new TreeNode();
@@ -272,7 +257,6 @@ std::istream& operator>> (std::istream& in, ListNode*& list) {
     }
     return in;
 }
-
 //output Node
 // beware that a char before the output will be deleted
 //cannot use Node* as std lib will simpily bypass the custom function and output the address
