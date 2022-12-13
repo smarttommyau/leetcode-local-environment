@@ -284,22 +284,39 @@ std::ostream& operator<< (std::ostream& out, const Node node) {
   std::queue<std::vector<Node*>> q;
   std::queue<int> num;
   q.push(node.children);
+  num.push(1);
   num.push(node.children.size());
+  int lstNull = 0;
   while(!q.empty()){
+    std::queue<std::vector<Node*>> tempq = q;
+    while(!tempq.empty()&&tempq.front().size()==0){
+      tempq.pop();
+    }
+    if(tempq.size()==0)
+      break;
     int temp = num.front();
     num.pop();
     for(int i = 0;i<temp;i++){
       std::vector<Node*> tempNode = q.front();
       q.pop();
+      if(tempNode.size()==0){
+          out << "null,";
+          lstNull++;
+      }
       for(auto x:tempNode){
         out << x->val << ",";
+        lstNull=0;
         q.push(x->children);
         num.push(x->children.size());
       }
+
+      if(tempNode.size()!=0){
+        out << "null,";
+        lstNull++;
+      }
     }
-    out << "null,";
   }
-  out << "\b\b\b\b\b\b]";//5 * \b delete the last null and the last comma
+  out << std::string(5*lstNull,'\b')+"\b]";//6 * \b delete the last null and the last comma
   return out;
 }
 //input Node

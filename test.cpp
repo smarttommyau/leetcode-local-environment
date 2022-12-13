@@ -25,6 +25,7 @@ int main(){
   // cout << root->left->left->val;
   Node out = *root;
   // cout << out.children[0]->val;
+  // cout << out.children[2]->children[0]->val;
   cout << out;
   //method2
   // cin >> nums2;
