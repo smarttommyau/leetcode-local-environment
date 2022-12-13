@@ -47,12 +47,12 @@ cout << v;
 [1,7,9,2,6,null,9,null,null,5,11,5,null]  
 ```
 ### ListNode
-
+![IMG_20221213_113712](https://user-images.githubusercontent.com/75346987/207221033-92061466-5b23-48e0-add5-b5902292f0d1.jpg)
 ```
 [1,2,3,4,5]
 ```
 ### Node
-
+![narytreeexample](https://user-images.githubusercontent.com/75346987/207221048-bbdfff6e-4401-47f5-8606-994c721b8e69.png)
 ```
 [1,null,3,2,4,null,5,6]
 ```
@@ -66,8 +66,6 @@ cin >> root;
 TreeNode outnode = *root;//cannot use TreeNode* to output as all pointer will output the address directly
 cout << outnode;
 ```
-### ListNode
-> work simlar as TreeNode
 # TODO
 1. More kind of vector support
 2. Support more kind of leetcode like input
