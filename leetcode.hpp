@@ -25,21 +25,55 @@ struct ListNode {
     ListNode(int x) : val(x), next(nullptr) {}
     ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
-class Node {
+class Node { //class only for auto complete
 public:
     int val;
     std::vector<Node*> children;
-
-    Node() {}
-
-    Node(int _val) {
-        val = _val;
-    }
+    Node* left;
+    Node* right;
+    Node* next;
 
     Node(int _val, std::vector<Node*> _children) {
         val = _val;
         children = _children;
     }
+    Node() : val(0), left(NULL), right(NULL), next(NULL) {}
+
+    Node(int _val) : val(_val), left(NULL), right(NULL), next(NULL) {}
+
+    Node(int _val, Node* _left, Node* _right, Node* _next)
+        : val(_val), left(_left), right(_right), next(_next) {}
+
+};
+class NodeChildren { //Called Node in leetcode but there are multiple vairant
+public:
+    int val;
+    std::vector<NodeChildren*> children;
+
+    NodeChildren() {}
+
+    NodeChildren(int _val) {
+        val = _val;
+    }
+
+    NodeChildren(int _val, std::vector<NodeChildren*> _children) {
+        val = _val;
+        children = _children;
+    }
+};
+class NodeLeftRightNext {//Called Node in leetcode but there are multiple vairant
+public:
+    int val;
+    NodeLeftRightNext* left;
+    NodeLeftRightNext* right;
+    NodeLeftRightNext* next;
+
+    NodeLeftRightNext() : val(0), left(NULL), right(NULL), next(NULL) {}
+
+    NodeLeftRightNext(int _val) : val(_val), left(NULL), right(NULL), next(NULL) {}
+
+    NodeLeftRightNext(int _val, NodeLeftRightNext* _left, NodeLeftRightNext* _right, NodeLeftRightNext* _next)
+        : val(_val), left(_left), right(_right), next(_next) {}
 };
 //vector output
 template <typename T>
@@ -315,23 +349,23 @@ std::istream& operator>> (std::istream& in, ListNode*& list) {
     return in;
 }
 
-//output Node
+//output NodeChildren variant of node (called node in leetcode)
 // beware that a char before the output will be deleted
-//cannot use Node* as std lib will simpily bypass the custom function and output the address
-std::ostream& operator<< (std::ostream& out, const Node node) {
+//cannot use NodeChildren * as std lib will simpily bypass the custom function and output the address
+std::ostream& operator<< (std::ostream& out, const NodeChildren node) {
   int lstNull = 0;
   out << "[";
   out << node.val;
   out << ",null,";
   lstNull++;
-  std::vector<Node*> nodes = node.children;
-  std::queue<std::vector<Node*>> q;
+  std::vector<NodeChildren*> nodes = node.children;
+  std::queue<std::vector<NodeChildren*>> q;
   std::queue<int> num;
   q.push(node.children);
   num.push(1);
   num.push(node.children.size());
   while(!q.empty()){
-    std::queue<std::vector<Node*>> tempq = q;
+    std::queue<std::vector<NodeChildren*>> tempq = q;
     while(!tempq.empty()&&tempq.front().size()==0){
       tempq.pop();
     }
@@ -340,7 +374,7 @@ std::ostream& operator<< (std::ostream& out, const Node node) {
     int temp = num.front();
     num.pop();
     for(int i = 0;i<temp;i++){
-      std::vector<Node*> tempNode = q.front();
+      std::vector<NodeChildren*> tempNode = q.front();
       q.pop();
       if(tempNode.size()==0){
           out << "null,";
@@ -362,8 +396,8 @@ std::ostream& operator<< (std::ostream& out, const Node node) {
   out << std::string(5*lstNull,'\b')+"\b]";//n * 5 * \b delete the last n null and the last comma
   return out;
 }
-//input Node
-std::istream& operator>> (std::istream& in, Node*& node) {
+//input NodeChildren
+std::istream& operator>> (std::istream& in, NodeChildren*& node) {
     char c = in.peek();
     while(c=='\n'||c==' '){
         in.get();
@@ -375,13 +409,13 @@ std::istream& operator>> (std::istream& in, Node*& node) {
      node = nullptr;
         return in;
     }
-  node = new Node();
+  node = new NodeChildren();
   size_t pos = str.find(',');
     if(pos==std::string::npos)
       pos = str.size();
   size_t lst = 1;
   bool start = true;
-  std::queue<Node*> parent;
+  std::queue<NodeChildren*> parent;
   while(lst<=pos){
     std::string s(str,lst,pos-lst);
     if(parent.empty()){
@@ -393,7 +427,7 @@ std::istream& operator>> (std::istream& in, Node*& node) {
       else start = false;
     }else {
       int x = stoi(s);
-      Node * newnode = new Node();
+      NodeChildren * newnode = new NodeChildren();
       parent.front()->children.push_back(newnode);
       newnode->val = x;
       parent.push(newnode);

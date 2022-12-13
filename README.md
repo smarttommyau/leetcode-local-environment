@@ -9,7 +9,8 @@ Simply clone this repo and ```#include "leetcode.hpp"```, you may take reference
 2. Basic support for TreeNode structure for graph questions
 3. cin and cout support for TreeNode
 4. cin and cout support for ListNode
-5. cin and cout support for Node
+5. cin and cout support for Node(NodeChildren, the Node class which use children)
+6. basic auto complete for Node(NodeLeftRightNext, the Node class with left right next pointers)
 # Template
 Look at the ***template.cpp*** gives a simple template.\
 You can simpily copy and paste the method to the template to start code and debug locally.
@@ -51,7 +52,7 @@ cout << v;
 ```
 [1,2,3,4,5]
 ```
-### Node
+### Node(NodeChildren)
 ![narytreeexample](https://user-images.githubusercontent.com/75346987/207221048-bbdfff6e-4401-47f5-8606-994c721b8e69.png)
 ```
 [1,null,3,2,4,null,5,6]
