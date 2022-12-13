@@ -257,3 +257,81 @@ std::istream& operator>> (std::istream& in, ListNode*& list) {
     }
     return in;
 }
+//output Node
+// beware that a char before the output will be deleted
+//cannot use Node* as std lib will simpily bypass the custom function and output the address
+std::ostream& operator<< (std::ostream& out, const Node node) {
+  out << "[";
+  out << node.val;
+  out << ",null,";
+  std::vector<Node*> nodes = node.children;
+  std::queue<std::vector<Node*>> q;
+  std::queue<int> num;
+  q.push(node.children);
+  num.push(1);
+  num.push(node.children.size());
+  int lstNull = 0;
+  while(!q.empty()){
+    std::queue<std::vector<Node*>> tempq = q;
+    while(!tempq.empty()&&tempq.front().size()==0){
+      tempq.pop();
+    }
+    if(tempq.size()==0)
+      break;
+    int temp = num.front();
+    num.pop();
+    for(int i = 0;i<temp;i++){
+      std::vector<Node*> tempNode = q.front();
+      q.pop();
+      if(tempNode.size()==0){
+          out << "null,";
+          lstNull++;
+      }
+      for(auto x:tempNode){
+        out << x->val << ",";
+        lstNull=0;
+        q.push(x->children);
+        num.push(x->children.size());
+      }
+
+      if(tempNode.size()!=0){
+        out << "null,";
+        lstNull++;
+      }
+    }
+  }
+  out << std::string(5*lstNull,'\b')+"\b]";//6 * \b delete the last null and the last comma
+  return out;
+}
+//input Node
+std::istream& operator>> (std::istream& in, Node*& node) {
+  std::string str;
+  std::getline(in,str,']');
+  node = new Node();
+  size_t pos = str.find(',');
+  size_t lst = 1;
+  bool start = true;
+  std::queue<Node*> parent;
+  while(lst<=pos){
+    std::string s(str,lst,pos-lst);
+    if(parent.empty()){
+      int x = stoi(s);
+      node->val = x;
+      parent.push(node);
+    }else if(s=="null"){
+      if(!start) parent.pop();
+      else start = false;
+    }else {
+      int x = stoi(s);
+      Node * newnode = new Node();
+      parent.front()->children.push_back(newnode);
+      newnode->val = x;
+      parent.push(newnode);
+    }
+    lst = pos+1;
+    pos = str.find(',',pos+1);
+    if(pos==std::string::npos)
+      pos = str.size();
+  }
+  return in;
+}
