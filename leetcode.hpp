@@ -6,6 +6,7 @@
 #include <sstream>
 #include <iterator>
 #include <algorithm>
+#include <vector>
 
 //structures
 struct TreeNode {
@@ -22,6 +23,22 @@ struct ListNode {
     ListNode() : val(0), next(nullptr) {}
     ListNode(int x) : val(x), next(nullptr) {}
     ListNode(int x, ListNode *next) : val(x), next(next) {}
+};
+class Node {
+public:
+    int val;
+    std::vector<Node*> children;
+
+    Node() {}
+
+    Node(int _val) {
+        val = _val;
+    }
+
+    Node(int _val, std::vector<Node*> _children) {
+        val = _val;
+        children = _children;
+    }
 };
 //vector output
 template <typename T>
@@ -44,6 +61,11 @@ std::ostream& operator<< (std::ostream& out, const std::vector<T>& v) {
 //for vector<char>
 std::istream& operator>> (std::istream& in, std::vector<char>& v) {
     v.clear();
+    char c = in.peek();
+    while(c=='\n'||c==' '){
+        in.get();
+        c = in.peek();
+    }
     std::string str;
     std::getline(in,str,']');
     v.reserve(str.size()/4);
@@ -57,6 +79,11 @@ std::istream& operator>> (std::istream& in, std::vector<char>& v) {
 //for vector<int>
 std::istream& operator>> (std::istream& in, std::vector<int>& v) {
     v.clear();
+    char c = in.peek();
+    while(c=='\n'||c==' '){
+        in.get();
+        c = in.peek();
+    }
     std::string str;
     std::getline(in,str,']');
     std::stringstream os;
@@ -81,6 +108,11 @@ std::istream& operator>> (std::istream& in, std::vector<int>& v) {
 //for vector<bool>
 std::istream& operator>> (std::istream& in, std::vector<bool>& v) {
     v.clear();
+    char c = in.peek();
+    while(c=='\n'||c==' '){
+        in.get();
+        c = in.peek();
+    }
     std::string str;
     std::getline(in,str,']');
     for(char x:str){
@@ -94,6 +126,11 @@ std::istream& operator>> (std::istream& in, std::vector<bool>& v) {
 template <class T>
 std::istream& operator>> (std::istream& in, std::vector<T>& v) {
     v.clear();
+    char c = in.peek();
+    while(c=='\n'||c==' '){
+        in.get();
+        c = in.peek();
+    }
     std::string str;
     int count =0;
     //take input
@@ -135,6 +172,7 @@ std::ostream& operator<< (std::ostream& out, const TreeNode & root) {
    TreeNode* r = new TreeNode(root.val,root.left,root.right);
    if(r)
      q.push(r);
+   int lstNull=0;
    while(!q.empty()){
      int i=0;
      std::queue<TreeNode*> q2 = q;
@@ -151,26 +189,31 @@ std::ostream& operator<< (std::ostream& out, const TreeNode & root) {
        if(node==nullptr){
          q.pop();
          out << "null,";
+         lstNull++;
          continue;
        }
        q.pop();
        out << node->val << ",";
+       lstNull=0;
          q.push(node->left);
          q.push(node->right);
      }
    }
-   out <<"\b]";
+  out << std::string(5*lstNull,'\b')+"\b]";//n * 5 * \b delete the last n null and the last comma
     return out;
 }
 
 //input TreeNode
-
 std::istream& operator>> (std::istream& in, TreeNode* & root) {
+    char c = in.peek();
+    while(c=='\n'||c==' '){
+        in.get();
+        c = in.peek();
+    }
   std::string str;
   std::getline(in,str,']');
   size_t pos = str.find(',');
   size_t lst = 1;
-  std::stringstream os;
   std::queue<TreeNode*> q;
   std::queue<std::pair<TreeNode*,bool>> parent;//parent, and left or right
   root = new TreeNode();
@@ -228,6 +271,9 @@ std::ostream& operator<< (std::ostream& out, const ListNode list) {
 }
 // input ListNode
 std::istream& operator>> (std::istream& in, ListNode*& list) {
+    char c = in.peek();
+    while(c=='\n'||c==' ')
+        c = in.get();
     std::string str;
     std::getline(in,str,']');
     std::stringstream os;
@@ -257,6 +303,7 @@ std::istream& operator>> (std::istream& in, ListNode*& list) {
     }
     return in;
 }
+
 //output Node
 // beware that a char before the output will be deleted
 //cannot use Node* as std lib will simpily bypass the custom function and output the address
@@ -300,11 +347,16 @@ std::ostream& operator<< (std::ostream& out, const Node node) {
       }
     }
   }
-  out << std::string(5*lstNull,'\b')+"\b]";//6 * \b delete the last null and the last comma
+  out << std::string(5*lstNull,'\b')+"\b]";//n * 5 * \b delete the last n null and the last comma
   return out;
 }
 //input Node
 std::istream& operator>> (std::istream& in, Node*& node) {
+    char c = in.peek();
+    while(c=='\n'||c==' '){
+        in.get();
+        c = in.peek();
+    }
   std::string str;
   std::getline(in,str,']');
   node = new Node();
