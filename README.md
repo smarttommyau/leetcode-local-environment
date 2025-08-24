@@ -5,7 +5,7 @@ A C++ library that can take input just like leetcode testcase, and structure fro
 # How to use it
 Simply clone this repo and ```#include "leetcode.hpp"```, you may take reference on ```template.cpp```
 # Currently supported feature
-1. multi-dimentional vector input output(bool,int,char)
+1. multi-dimentional vector input output(bool,int,char,string)
 2. Basic support for TreeNode structure for graph questions
 3. cin and cout support for TreeNode
 4. cin and cout support for ListNode
@@ -15,11 +15,12 @@ Simply clone this repo and ```#include "leetcode.hpp"```, you may take reference
 Look at the ***template.cpp*** gives a simple template.\
 You can simpily copy and paste the method to the template to start code and debug locally.
 # Vector
-> multi-dimensional vector are support(bool,int,char)
+> multi-dimensional vector are support(bool,int,char,string)
 ```
 [[0,0,1],[1,2,3]]
 [[true,false],[false,true]]
 [["h","e","l","l","o"],["w","o","r","l","d"]]
+["hello world","!"]
 ```
 ## Code (int 2d vector as exmaple)
 ### Input
