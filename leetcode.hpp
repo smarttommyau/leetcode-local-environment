@@ -84,8 +84,12 @@ std::ostream& operator<< (std::ostream& out, const std::vector<T>& v) {
     }
          out << '[';
          bool ischar = std::is_same<char,T>::value;//check if it is a vector<char>
+         bool isstring = std::is_same<std::string,T>::value;//check if it is a vector<string>
          for(auto x:v){
-              out << (ischar?"\"":"") << x << (ischar?"\"":"") << ",";//ouput 'char'/int
+              if(ischar) out << "'" << x << "'";//output char with single quotes
+              else if(isstring) out << "\"" << x << "\"";//output string with double quotes
+              else out << x;//output other types without quotes
+              out << ",";
          }
          out << "\b]"; // use two ANSI backspace characters '\b' to overwrite final ", "
 
@@ -157,6 +161,35 @@ std::istream& operator>> (std::istream& in, std::vector<bool>& v) {
             v.push_back(true);
     }
     return in;
+}
+//for vector<string>
+std::istream& operator>> (std::istream& in, std::vector<std::string>& v) {
+  v.clear();
+  char c = in.peek();
+  while(c=='\n'||c==' '){
+      in.get();
+      c = in.peek();
+  }
+  std::string str;
+  std::getline(in,str,']');
+  
+  size_t pos = 0;
+  while(pos < str.length()) {
+      // find start of quoted string
+      size_t start = str.find('\"', pos);
+      if(start == std::string::npos) break;
+      
+      // find end of quoted string
+      size_t end = str.find('\"', start + 1);
+      if(end == std::string::npos) break;
+      
+      // extract string content between quotes
+      std::string content = str.substr(start + 1, end - start - 1);
+      v.push_back(content);
+      
+      pos = end + 1;
+  }
+  return in;
 }
 template <class T>
 std::istream& operator>> (std::istream& in, std::vector<T>& v) {
@@ -439,3 +472,6 @@ std::istream& operator>> (std::istream& in, NodeChildren*& node) {
   }
   return in;
 }
+
+
+
