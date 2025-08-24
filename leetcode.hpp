@@ -85,7 +85,7 @@ std::ostream& operator<< (std::ostream& out, const std::vector<T>& v) {
          out << '[';
          bool ischar = std::is_same<char,T>::value;//check if it is a vector<char>
          for(auto x:v){
-              out << (ischar?"\"":"") << x << (ischar?"\"":"") << ",";//ouput 'char'/int
+              out << (ischar?"'":"") << x << (ischar?"'":"") << ",";//ouput 'char'/int
          }
          out << "\b]"; // use two ANSI backspace characters '\b' to overwrite final ", "
 
